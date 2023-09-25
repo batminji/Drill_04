@@ -78,4 +78,8 @@ while running:
     frame = (frame + 1) % 4
     x += dir_x * 10
     y += dir_y * 10
+    if x > TUK_WIDTH - 65 or x < 65 :
+        x -= dir_x * 10
+    if y > TUK_HEIGHT - 98 or y < 98:
+        y -= dir_y * 10
     delay(0.05)
