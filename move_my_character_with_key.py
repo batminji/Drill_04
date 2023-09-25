@@ -35,3 +35,41 @@ def motion():
         dir_y -= 1
     if pyautogui.keyUp('down'):
         dir_y += 1
+
+running = True
+x = TUK_WIDTH // 2
+y = TUK_HEIGHT // 2
+frame = 0
+dir_x = 0
+dir_y = 0
+
+while running:
+    clear_canvas()
+    tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
+
+    if dir_x == 0 and dir_y == 0: # stand
+        pass
+    elif dir_x > 0 and dir_y == 0 : # right
+        pass
+    elif dir_x < 0 and dir_y == 0 : # left
+        pass
+    elif dir_x == 0 and dir_y > 0 : # up
+        pass
+    elif dir_x == 0 and dir_y < 0 : # down
+        pass
+    elif dir_x < 0 and dir_y > 0 : # left_up
+        pass
+    elif dir_x > 0 and dir_y > 0 : # right_up
+        pass
+    elif dir_x < 0 and dir_y < 0 : # left_down
+        pass
+    elif dir_x > 0 and dir_y < 0 : # right_down
+        pass
+
+
+    update_canvas()
+    motion()
+    frame = (frame + 1) % 4
+    x += dir_x * 5
+    y += dir_y * 5
+    delay(0.05)
