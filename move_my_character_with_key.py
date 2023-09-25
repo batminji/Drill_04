@@ -1,5 +1,4 @@
 from pico2d import *
-import pyautogui
 
 TUK_WIDTH, TUK_HEIGHT = 1280, 1024
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
@@ -18,23 +17,31 @@ keroro_left_up = load_image('keroro_left_up.png')
 
 def motion():
     global running, dir_x, dir_y
-    if pyautogui.keyDown('right'):
-        dir_x += 1
-    if pyautogui.keyDown('left'):
-        dir_x -= 1
-    if pyautogui.keyDown('up'):
-        dir_y += 1
-    if pyautogui.keyDown('down'):
-        dir_y -= 1
+    events = get_events()
 
-    if pyautogui.keyUp('right'):
-        dir_x -= 1
-    if pyautogui.keyUp('left'):
-        dir_x += 1
-    if pyautogui.keyUp('up'):
-        dir_y -= 1
-    if pyautogui.keyUp('down'):
-        dir_y += 1
+    for event in events:
+        if event.type == SDL_QUIT:
+            running = False
+        elif event.key == SDLK_ESCAPE:
+            running = False
+        elif event.type == SDL_KEYDOWN:
+            if event.key == SDLK_RIGHT:
+                dir_x += 1
+            if event.key == SDLK_LEFT:
+                dir_x -= 1
+            if event.key == SDLK_UP:
+                dir_y += 1
+            if event.key == SDLK_DOWN:
+                dir_y -= 1
+        elif event.type == SDL_KEYUP:
+            if event.key == SDLK_RIGHT:
+                dir_x -= 1
+            if event.key == SDLK_LEFT:
+                dir_x += 1
+            if event.key == SDLK_UP:
+                dir_y -= 1
+            if event.key == SDLK_DOWN:
+                dir_y += 1
 
 running = True
 x = TUK_WIDTH // 2
@@ -48,28 +55,27 @@ while running:
     tuk_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
 
     if dir_x == 0 and dir_y == 0: # stand
-        pass
+        keroro_stand.clip_draw(0, 0, 265, 390, x, y, 130, 195)
     elif dir_x > 0 and dir_y == 0 : # right
-        pass
+        keroro_right.clip_draw(frame * 250, 0, 250, 345, x, y, 130, 195)
     elif dir_x < 0 and dir_y == 0 : # left
-        pass
+        keroro_left.clip_draw(frame * 250, 0, 250, 345, x, y, 130, 195)
     elif dir_x == 0 and dir_y > 0 : # up
-        pass
+        keroro_up.clip_draw(frame * 300, 0, 300, 355, x, y, 150, 195)
     elif dir_x == 0 and dir_y < 0 : # down
-        pass
+        keroro_down.clip_draw(frame * 300, 0, 300, 355, x, y, 150, 185)
     elif dir_x < 0 and dir_y > 0 : # left_up
-        pass
+        keroro_left_up.clip_draw(frame * 290, 0, 290, 345, x, y, 130, 185)
     elif dir_x > 0 and dir_y > 0 : # right_up
-        pass
+        keroro_right_up.clip_draw(frame * 290, 0, 290, 345, x, y, 130, 195)
     elif dir_x < 0 and dir_y < 0 : # left_down
-        pass
+        keroro_left_down.clip_draw(frame * 260, 0, 260, 350, x, y, 130, 195)
     elif dir_x > 0 and dir_y < 0 : # right_down
-        pass
-
+        keroro_right_down.clip_draw(frame * 260, 0, 260, 350, x, y, 130, 195)
 
     update_canvas()
     motion()
     frame = (frame + 1) % 4
-    x += dir_x * 5
-    y += dir_y * 5
+    x += dir_x * 10
+    y += dir_y * 10
     delay(0.05)
