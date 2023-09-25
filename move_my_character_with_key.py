@@ -83,3 +83,4 @@ while running:
     if y > TUK_HEIGHT - 98 or y < 98:
         y -= dir_y * 10
     delay(0.05)
+    
